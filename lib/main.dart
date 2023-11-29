@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(ContainerExample());
+  runApp(TextFieldExample());
 }
 
 /// Widget
@@ -15,59 +15,159 @@ void main() {
 /// Widget
 /// List<Widget>
 
-class ContainerExample extends StatefulWidget {
-  const ContainerExample({super.key});
+class TextFieldExample extends StatelessWidget {
+  const TextFieldExample({super.key});
 
-  @override
-  State<ContainerExample> createState() => _ContainerExampleState();
-}
-
-class _ContainerExampleState extends State<ContainerExample> {
   @override
   Widget build(BuildContext context) {
+    final TextEditingController controller = TextEditingController();
+
+    final FocusNode focusNode = FocusNode();
+    final FocusNode focusNode1 = FocusNode();
+    final FocusNode focusNode2 = FocusNode();
+    void doIt() {
+      // print("Listener : ${controller.text}");
+      print("FocusNode: ${focusNode.hasFocus}");
+    }
+
+    // focusNode.addListener(doIt);
+    // controller.addListener(doIt);
+
+    ///! close
+    // controller.dispose();
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Container Example"),
+          title: Text("TextField Example"),
         ),
-        body: Container(
-          width: 100,
-          height: 100,
-          alignment: Alignment.bottomRight,
-          // margin: EdgeInsets.only(right: 350),
-          padding: EdgeInsets.only(
-            top: 20,
-            left: 20,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.green,
-//               background-color: #4158D0;
-// background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-            // image: DecorationImage(
-            //   image: NetworkImage(
-            //     "https://cdn.discordapp.com/attachments/1032886971749630033/1177515908139335760/IMG_6343.jpg?ex=6572ca25&is=65605525&hm=a43419eee79b00e83a6681df9d84d8828cb4e93c677289dad6a6220df3249fb4&",
-            //   ),
-            //   opacity: 0.1,
-            //   fit: BoxFit.cover,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              obscureText: true,
+              onTap: () {
+                print("OnTap");
+              },
+              onTapOutside: (event) {
+                focusNode1.unfocus();
+              },
+              selectionControls: CupertinoTextSelectionControls(),
+              // enabled: false,
+              cursorWidth: 10,
+              onChanged: (value) {
+                print(value);
+              },
+              onEditingComplete: () {
+                print("Submit");
+              },
+              onSubmitted: (value) {
+                print("Submit $value");
+              },
+              // maxLength: 50,
+              maxLines: 2,
+              // keyboardType: TextInputType.multiline,
+              decoration: InputDecoration(
+                // filled: false,
+                // fillColor: Colors.red,
+                enabledBorder: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(),
+                // label: Text("hello"),
+                // labelText: "Hello",
+                // floatingLabelAlignment: FloatingLabelAlignment.center,
+                // hintText: "fasdf",
+                // helperText: "fadsfasfasd",
+                // icon: Icon(Icons.email),
+                prefix: Icon(
+                  Icons.email,
+                  color: Colors.black,
+                ),
+                // prefixIconConstraints: BoxConstraints(
+                //   maxHeight: 20,
+                // )
+
+                // constraints: BoxConstraints()
+                // prefixIcon: Icon(Icons.email),
+                // suffix: Icon(Icons.password),
+                // suffixIcon: Icon(Icons.password),
+              ),
+              focusNode: focusNode1,
+              controller: controller,
+            ),
+            // TextField(
+            //   focusNode: focusNode,
+            //   controller: controller,
             // ),
-            border: Border.all(),
-            // gradient: LinearGradient(
-            //   begin: Alignment.bottomLeft,
-            //   end: Alignment.topRight,
-            //   colors: [
-            //     Color.fromRGBO(65, 88, 208, 1),
-            //     Color.fromRGBO(200, 80, 192, 1),
-            //     Color.fromRGBO(255, 204, 112, 1),
-            //   ],
-            //   stops: [
-            //     0,
-            //     0.46,
-            //     1,
-            //   ],
-            // )
-            // shape: BoxShape.rectangle,
-          ),
-          child: Text("Hello"),
+            // TextField(
+            //   focusNode: focusNode2,
+            //   controller: controller,
+            // ),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       focusNode1.requestFocus();
+            //       // focusNode.unfocus();
+            //       // print(focusNode.hasFocus);s
+
+            //       // print(controller.text);
+            //       // controller.clear();
+
+            //       // controller.removeListener(doIt);
+
+            //       // controller.text = '';
+            //       // controller.value = TextEditingValue(
+            //       //     text: "My name is ``.",
+            //       //     selection:
+            //       //         TextSelection.fromPosition(TextPosition(offset: 12)));
+
+            //       // controller.selection =
+            //       //     TextSelection.fromPosition(TextPosition(offset: 2));
+            //     },
+            //     child: Text("Focus 1")),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       // focusNode.requestFocus();
+            //       // focusNode.unfocus();
+            //       // print(focusNode.hasFocus);
+            //       focusNode.requestFocus();
+
+            //       // print(controller.text);
+            //       // controller.clear();
+
+            //       // controller.removeListener(doIt);
+
+            //       // controller.text = '';
+            //       // controller.value = TextEditingValue(
+            //       //     text: "My name is ``.",
+            //       //     selection:
+            //       //         TextSelection.fromPosition(TextPosition(offset: 12)));
+
+            //       // controller.selection =
+            //       //     TextSelection.fromPosition(TextPosition(offset: 2));
+            //     },
+            //     child: Text("Focus 2")),
+            // ElevatedButton(
+            // onPressed: () {
+            //   focusNode2.requestFocus();
+            // focusNode.requestFocus();
+            // focusNode.unfocus();
+            // print(focusNode.hasFocus);
+
+            // print(controller.text);
+            // controller.clear();
+
+            // controller.removeListener(doIt);
+
+            // controller.text = '';
+            // controller.value = TextEditingValue(
+            //     text: "My name is ``.",
+            //     selection:
+            //         TextSelection.fromPosition(TextPosition(offset: 12)));
+
+            // controller.selection =
+            //     TextSelection.fromPosition(TextPosition(offset: 2));
+            // },
+            // child: Text("Foucs 3")),
+          ],
         ),
       ),
     );
