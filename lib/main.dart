@@ -1,8 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(TextFieldExample());
+  runApp(SignUpScreen());
 }
 
 /// Widget
@@ -15,159 +17,189 @@ void main() {
 /// Widget
 /// List<Widget>
 
-class TextFieldExample extends StatelessWidget {
-  const TextFieldExample({super.key});
+// class StateExample extends StatefulWidget {
+//   const StateExample({super.key});
+
+//   @override
+//   State<StateExample> createState() => _StateExampleState();
+// }
+
+// class _StateExampleState extends State<StateExample> {
+//   void boot() {
+//     // boot();
+
+//     // Future.delayed(Duration(milliseconds: 1), () {
+//     //   setState(() {});
+//     //   boot();
+//     // });
+//     ///business logic
+
+//     setState(() {
+//       ///business logic
+//       setState(() {});
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     boot();
+//     return MaterialApp(
+//       key: UniqueKey(),
+//       showPerformanceOverlay: true,
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: Text("State Example ${DateTime.now()}"),
+//         ),
+//         body: Container(
+//           decoration: BoxDecoration(
+//             image: DecorationImage(
+//               fit: BoxFit.fill,
+//               image: NetworkImage(
+//                   "https://images.pexels.com/photos/33109/fall-autumn-red-season.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  Widget input(String hint) {
+    return TextField(
+      style: TextStyle(
+        color: Colors.white,
+      ),
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: TextStyle(
+          color: Colors.grey,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController controller = TextEditingController();
-
-    final FocusNode focusNode = FocusNode();
-    final FocusNode focusNode1 = FocusNode();
-    final FocusNode focusNode2 = FocusNode();
-    void doIt() {
-      // print("Listener : ${controller.text}");
-      print("FocusNode: ${focusNode.hasFocus}");
-    }
-
-    // focusNode.addListener(doIt);
-    // controller.addListener(doIt);
-
-    ///! close
-    // controller.dispose();
-
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text("TextField Example"),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              obscureText: true,
-              onTap: () {
-                print("OnTap");
-              },
-              onTapOutside: (event) {
-                focusNode1.unfocus();
-              },
-              selectionControls: CupertinoTextSelectionControls(),
-              // enabled: false,
-              cursorWidth: 10,
-              onChanged: (value) {
-                print(value);
-              },
-              onEditingComplete: () {
-                print("Submit");
-              },
-              onSubmitted: (value) {
-                print("Submit $value");
-              },
-              // maxLength: 50,
-              maxLines: 2,
-              // keyboardType: TextInputType.multiline,
-              decoration: InputDecoration(
-                // filled: false,
-                // fillColor: Colors.red,
-                enabledBorder: OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(),
-                // label: Text("hello"),
-                // labelText: "Hello",
-                // floatingLabelAlignment: FloatingLabelAlignment.center,
-                // hintText: "fasdf",
-                // helperText: "fadsfasfasd",
-                // icon: Icon(Icons.email),
-                prefix: Icon(
-                  Icons.email,
-                  color: Colors.black,
-                ),
-                // prefixIconConstraints: BoxConstraints(
-                //   maxHeight: 20,
-                // )
-
-                // constraints: BoxConstraints()
-                // prefixIcon: Icon(Icons.email),
-                // suffix: Icon(Icons.password),
-                // suffixIcon: Icon(Icons.password),
+        resizeToAvoidBottomInset: false,
+        body: Container(
+          padding: EdgeInsets.only(
+            // top: MediaQuery.of(context).size.height * 0.2,
+            left: 20,
+            right: 20,
+            bottom: 30,
+          ),
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage(
+                "https://img.freepik.com/premium-photo/phone-wallpapers-that-are-out-this-world_899894-4266.jpg",
               ),
-              focusNode: focusNode1,
-              controller: controller,
+              fit: BoxFit.fill,
             ),
-            // TextField(
-            //   focusNode: focusNode,
-            //   controller: controller,
-            // ),
-            // TextField(
-            //   focusNode: focusNode2,
-            //   controller: controller,
-            // ),
-            // ElevatedButton(
-            //     onPressed: () {
-            //       focusNode1.requestFocus();
-            //       // focusNode.unfocus();
-            //       // print(focusNode.hasFocus);s
-
-            //       // print(controller.text);
-            //       // controller.clear();
-
-            //       // controller.removeListener(doIt);
-
-            //       // controller.text = '';
-            //       // controller.value = TextEditingValue(
-            //       //     text: "My name is ``.",
-            //       //     selection:
-            //       //         TextSelection.fromPosition(TextPosition(offset: 12)));
-
-            //       // controller.selection =
-            //       //     TextSelection.fromPosition(TextPosition(offset: 2));
-            //     },
-            //     child: Text("Focus 1")),
-            // ElevatedButton(
-            //     onPressed: () {
-            //       // focusNode.requestFocus();
-            //       // focusNode.unfocus();
-            //       // print(focusNode.hasFocus);
-            //       focusNode.requestFocus();
-
-            //       // print(controller.text);
-            //       // controller.clear();
-
-            //       // controller.removeListener(doIt);
-
-            //       // controller.text = '';
-            //       // controller.value = TextEditingValue(
-            //       //     text: "My name is ``.",
-            //       //     selection:
-            //       //         TextSelection.fromPosition(TextPosition(offset: 12)));
-
-            //       // controller.selection =
-            //       //     TextSelection.fromPosition(TextPosition(offset: 2));
-            //     },
-            //     child: Text("Focus 2")),
-            // ElevatedButton(
-            // onPressed: () {
-            //   focusNode2.requestFocus();
-            // focusNode.requestFocus();
-            // focusNode.unfocus();
-            // print(focusNode.hasFocus);
-
-            // print(controller.text);
-            // controller.clear();
-
-            // controller.removeListener(doIt);
-
-            // controller.text = '';
-            // controller.value = TextEditingValue(
-            //     text: "My name is ``.",
-            //     selection:
-            //         TextSelection.fromPosition(TextPosition(offset: 12)));
-
-            // controller.selection =
-            //     TextSelection.fromPosition(TextPosition(offset: 2));
-            // },
-            // child: Text("Foucs 3")),
-          ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                // child: Row(
+                //   children: [
+                //     Expanded(child: TextField()),
+                //     Expanded(child: TextField()),
+                //   ],
+                // ),
+                child: SizedBox(),
+              ),
+              // Expanded(
+              //   child: Row(
+              //     children: [
+              //       Expanded(
+              //         child: Container(
+              //           color: Colors.green,
+              //         ),
+              //       ),
+              //       Expanded(
+              //         child: Container(
+              //           color: Colors.red,
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
+              Text(
+                "Create",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 40),
+                child: Text(
+                  "Account",
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              input("Your Name"),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 40),
+                child: input("Your Email"),
+              ),
+              input("Your Password"),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 40),
+                child: input("Confirm Password"),
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Sign Up",
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Back to",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Sign In",
+                          style: TextStyle(
+                            color: Colors.red,
+                          ),
+                        ))
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
