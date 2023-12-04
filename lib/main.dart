@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(SignUpScreen());
+  runApp(DrawerExample());
 }
 
 /// Widget
@@ -63,145 +63,138 @@ void main() {
 //     );
 //   }
 // }
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+
+/// Column > Flex 1,4 = 5,
+/// 1/5,4/5
+/// Column > Flex 2,2,2 = 6
+
+class DrawerExample extends StatefulWidget {
+  const DrawerExample({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<DrawerExample> createState() => _DrawerExampleState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  Widget input(String hint) {
-    return TextField(
-      style: TextStyle(
-        color: Colors.white,
-      ),
-      decoration: InputDecoration(
-        hintText: hint,
-        hintStyle: TextStyle(
-          color: Colors.grey,
+class _DrawerExampleState extends State<DrawerExample> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  bool checkValue = false;
+
+  final FocusNode focusNode = FocusNode();
+
+  ///Global Key => Widget State
+  ///1. Create Key
+  ///2. Setup
+  final GlobalKey<_MyWidgetState> key = GlobalKey();
+
+  final GlobalKey<ScaffoldState> globalKey = GlobalKey();
+
+  @override
+  Widget build(BuildContext context) {
+    focusNode.addListener(() {
+      setState(() {});
+    });
+    return MaterialApp(
+      home: Scaffold(
+        body: scaffoldBody(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            key.currentState?.random();
+          },
         ),
       ),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          padding: EdgeInsets.only(
-            // top: MediaQuery.of(context).size.height * 0.2,
-            left: 20,
-            right: 20,
-            bottom: 30,
+  Widget scaffoldBody() {
+    return Scaffold(
+      key: globalKey,
+      endDrawer: drawer(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () {
+            globalKey.currentState?.openEndDrawer();
+          },
+          icon: Icon(Icons.menu),
+        ),
+      ),
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: body(),
+      ),
+      backgroundColor: Colors.grey.shade100,
+    );
+  }
+
+  double value = 1;
+
+  Widget drawer() {
+    return Container(
+      width: 200,
+      height: MediaQuery.of(context).size.height,
+      color: Colors.red,
+    );
+  }
+
+  Widget body() {
+    return Container(
+      child: TextField(
+        style: TextStyle(
+          color: Colors.black,
+        ),
+        decoration: InputDecoration(
+          suffixIconConstraints: BoxConstraints(maxWidth: 100),
+          suffixIcon: Container(
+            color: Colors.green,
+            // child: Text('fads'),
           ),
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(
-                "https://img.freepik.com/premium-photo/phone-wallpapers-that-are-out-this-world_899894-4266.jpg",
-              ),
-              fit: BoxFit.fill,
-            ),
+          hintText: "hello",
+          hintStyle: TextStyle(
+            color: Colors.grey,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                // child: Row(
-                //   children: [
-                //     Expanded(child: TextField()),
-                //     Expanded(child: TextField()),
-                //   ],
-                // ),
-                child: SizedBox(),
-              ),
-              // Expanded(
-              //   child: Row(
-              //     children: [
-              //       Expanded(
-              //         child: Container(
-              //           color: Colors.green,
-              //         ),
-              //       ),
-              //       Expanded(
-              //         child: Container(
-              //           color: Colors.red,
-              //         ),
-              //       )
-              //     ],
-              //   ),
-              // ),
-              Text(
-                "Create",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 40),
-                child: Text(
-                  "Account",
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              input("Your Name"),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 40),
-                child: input("Your Email"),
-              ),
-              input("Your Password"),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 40),
-                child: input("Confirm Password"),
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Sign Up",
-                    style: TextStyle(
-                      color: Colors.red,
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Back to",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Sign In",
-                          style: TextStyle(
-                            color: Colors.red,
-                          ),
-                        ))
-                  ],
-                ),
-              )
-            ],
+          contentPadding: EdgeInsets.all(10),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
       ),
+    );
+  }
+}
+
+abstract class RandomCount extends StatefulWidget {
+  final int max;
+  const RandomCount({super.key, required this.max});
+}
+
+class MyWidget extends RandomCount {
+  const MyWidget({super.key, super.max = 20});
+
+  @override
+  State createState() => _MyWidgetState();
+}
+
+class MyWidget2 extends RandomCount {
+  MyWidget2({super.key, super.max = 100});
+
+  @override
+  State createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<RandomCount> {
+  double count = 1;
+
+  void random() {
+    count = Random.secure().nextInt(widget.max).toDouble();
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(child: Text('$count')),
     );
   }
 }
