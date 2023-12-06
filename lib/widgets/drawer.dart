@@ -1,82 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_batch_one/widgets/builder/future.dart';
-import 'package:flutter_batch_one/widgets/builder/stream.dart';
-import 'package:flutter_batch_one/widgets/builder/valuelistenable.dart';
-import 'package:flutter_batch_one/widgets/images/networking_image.dart';
-import 'package:flutter_batch_one/widgets/listtile.dart';
-import 'package:flutter_batch_one/widgets/scrollable/singlechild.dart';
-import 'package:flutter_batch_one/widgets/state/state.dart';
-import 'package:flutter_batch_one/widgets/wrap.dart';
-
-void main() {
-  runApp(MaterialApp(
-    home: SingleChidScrollWidgetExample(),
-  ));
-}
-
-/// Widget
-///
-/// App (Material, Cupertino)
-///
-/// StatelessWidget
-/// StatefulWidget
-///
-/// Widget
-/// List<Widget>
-
-// class StateExample extends StatefulWidget {
-//   const StateExample({super.key});
-
-//   @override
-//   State<StateExample> createState() => _StateExampleState();
-// }
-
-// class _StateExampleState extends State<StateExample> {
-//   void boot() {
-//     // boot();
-
-//     // Future.delayed(Duration(milliseconds: 1), () {
-//     //   setState(() {});
-//     //   boot();
-//     // });
-//     ///business logic
-
-//     setState(() {
-//       ///business logic
-//       setState(() {});
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     boot();
-//     return MaterialApp(
-//       key: UniqueKey(),
-//       showPerformanceOverlay: true,
-//       home: Scaffold(
-//         appBar: AppBar(
-//           title: Text("State Example ${DateTime.now()}"),
-//         ),
-//         body: Container(
-//           decoration: BoxDecoration(
-//             image: DecorationImage(
-//               fit: BoxFit.fill,
-//               image: NetworkImage(
-//                   "https://images.pexels.com/photos/33109/fall-autumn-red-season.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-/// Column > Flex 1,4 = 5,
-/// 1/5,4/5
-/// Column > Flex 2,2,2 = 6
 
 class DrawerExample extends StatefulWidget {
   const DrawerExample({super.key});
@@ -119,12 +43,12 @@ class _DrawerExampleState extends State<DrawerExample> {
   Widget scaffoldBody() {
     return Scaffold(
       key: globalKey,
-      drawer: drawer(),
+      endDrawer: drawer(),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {
-            globalKey.currentState?.openDrawer();
+            globalKey.currentState?.openEndDrawer();
           },
           icon: Icon(Icons.menu),
         ),
@@ -142,12 +66,9 @@ class _DrawerExampleState extends State<DrawerExample> {
 
   Widget drawer() {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.8,
+      width: 200,
       height: MediaQuery.of(context).size.height,
-      color: Colors.white,
-      child: Column(
-        children: [],
-      ),
+      color: Colors.red,
     );
   }
 
