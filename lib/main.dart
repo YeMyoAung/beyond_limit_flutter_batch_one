@@ -6,21 +6,241 @@ import 'package:flutter_batch_one/widgets/builder/future.dart';
 import 'package:flutter_batch_one/widgets/builder/stream.dart';
 import 'package:flutter_batch_one/widgets/builder/valuelistenable.dart';
 import 'package:flutter_batch_one/widgets/images/networking_image.dart';
+import 'package:flutter_batch_one/widgets/keys/keys_example.dart';
 import 'package:flutter_batch_one/widgets/keys/page.dart';
 import 'package:flutter_batch_one/widgets/keys/valuekey.dart';
 import 'package:flutter_batch_one/widgets/listtile.dart';
+import 'package:flutter_batch_one/widgets/route/screen_1.dart';
 import 'package:flutter_batch_one/widgets/scrollable/gridview.dart';
 import 'package:flutter_batch_one/widgets/scrollable/pageview.dart';
 import 'package:flutter_batch_one/widgets/scrollable/refreshindicator.dart';
 import 'package:flutter_batch_one/widgets/scrollable/singlechild.dart';
 import 'package:flutter_batch_one/widgets/scrollable/tabbar.dart';
+import 'package:flutter_batch_one/widgets/stack.dart';
 import 'package:flutter_batch_one/widgets/state/state.dart';
+import 'package:flutter_batch_one/widgets/switch.dart';
 import 'package:flutter_batch_one/widgets/wrap.dart';
 
+final Map<String, Widget Function(BuildContext)> s = {
+  '/login': (_) => const Scaffold(),
+};
+
+// s['/login'](context);
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() {
-  runApp(const MaterialApp(
-    home: PageStorageKeyExampleWidget(),
-  ));
+  runApp(
+    MaterialApp(
+      navigatorKey: navigatorKey,
+      // initialRoute: '/screen-1',
+      // routes: {
+      //   '/screen-1': (_) => RouteScreen(
+      //         title: "Screen 1",
+      //         onTap: () {
+      //           Navigator.of(navigatorKey.currentContext!)
+      //               .pushNamed('/screen-2');
+      //         },
+      //         data: "Go To Screen 2",
+      //       ),
+      //   '/screen-2': (_) => const RouteScreen(title: "Screen 2"),
+      // },
+      // home: RouteScreen(
+      //   title: "Screen 1",
+      //   data: "Go to Screen 2",
+      //   onTap: (ctx) async {
+      //     // final result = await Navigator.of(ctx).push(
+      //     //   MaterialPageRoute(
+      //     //     settings: const RouteSettings(name: "/screen-2"),
+      //     //     builder: (_) {
+      //     //       return RouteScreen(
+      //     //         title: "Screen 2",
+      //     //         data: "Go to Screen 3",
+      //     //         onTap: (c) {
+      //     //           Navigator.of(ctx).push(
+      //     //             MaterialPageRoute(
+      //     //               settings: const RouteSettings(name: "/screen-3"),
+      //     //               builder: (_) {
+      //     //                 return PopRouteScreen(
+      //     //                   title: "Screen 3",
+      //     //                   onTap: (ctx) {
+      //     //                     Navigator.of(ctx).popUntil((route) {
+      //     //                       print(route.settings.name);
+      //     //                       return route.settings.name == '/screen-2';
+      //     //                     });
+      //     //                   },
+      //     //                 );
+      //     //               },
+      //     //             ),
+      //     //           );
+      //     //         },
+      //     //       );
+      //     //       // return RouteScreen(
+      //     //       //   data: "Go to Screen 3",
+      //     //       //   onTap: (ctx) {
+      //     //       //     Navigator.of(ctx).pushAndRemoveUntil(
+      //     //       //       MaterialPageRoute(
+      //     //       //         settings: const RouteSettings(name: "/screen-3"),
+      //     //       //         builder: (_) {
+      //     //       //           return RouteScreen(
+      //     //       //             onTap: (ctx) {
+      //     //       //               Navigator.of(ctx)
+      //     //       //                   .pop(Random.secure().nextInt(255));
+      //     //       //             },
+      //     //       //             title: "Screen 3",
+      //     //       //           );
+      //     //       //         },
+      //     //       //       ),
+      //     //       //       (route) {
+
+      //     //       //         return route.settings.name != '/screen-3';
+      //     //       //       },
+      //     //       //     );
+
+      //     //       //   },
+      //     //       //   title: "Screen 2",
+      //     //       // );
+      //     //     },
+      //     //   ),
+      //     // );
+      //     // print("Future result $result");
+      //   },
+      // ),
+
+      // onGenerateTitle: (_) {
+      //   print(_);
+      //   return "Title";
+      // },
+
+      // builder: (ctx, child) {
+      //   print(ctx);
+      //   return Scaffold(
+      //     body: child,
+      //   );
+      // },
+
+      onGenerateRoute: (settings) {
+        // if (settings.name == '/screen-2') {
+        //   return MaterialPageRoute(
+        //     settings: settings,
+        //     builder: (_) => const RouteScreen(
+        //       title: "Screen 2",
+        //     ),
+        //   );
+        // }
+
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => RouteScreen(
+            title: "Screen 1",
+            data: "Dialog",
+            onTap: (ctx) {
+              // Navigator.of(navigatorKey.currentContext!).pushNamed(
+              //   '/screen-2',
+              //   arguments: {
+              //     "name": "Mg Mg",
+              //   },
+              // );
+
+              // showDatePicker(
+              //         initialEntryMode: DatePickerEntryMode.input,
+              //         context: ctx,
+              //         firstDate: DateTime(2000),
+              //         lastDate: DateTime(2010))
+              //     .then(print);
+
+              // showLicensePage(context: ctx);
+
+              // showTimePicker(context: ctx, initialTime: TimeOfDay.now());
+
+              // ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+              //   content: const Text("Hello"),
+              //   action: SnackBarAction(
+              //     label: "Hello",
+              //     onPressed: () {},
+              //   ),
+              // ));
+
+              showSearch(context: ctx, delegate: Search());
+
+              // showDialog(
+              //   barrierDismissible: false,
+              //   context: ctx,
+              //   builder: (_) {
+              //     return AlertDialog(
+              //       title: const Text("Example"),
+              //       content: const Text("Hello"),
+              //       actions: [
+              //         TextButton(
+              //           child: const Text("Ok"),
+              //           onPressed: () {
+              //             Navigator.of(ctx).pop("Hello");
+              //           },
+              //         )
+              //       ],
+              //     );
+              //   },
+              // ).then(print);
+
+              // showModalBottomSheet(
+              //   isScrollControlled: true,
+              //   context: ctx,
+              //   builder: (_) {
+              //     return Container(
+              //       color: Colors.green,
+              //     );
+              //   },
+              // );
+            },
+          ),
+        );
+      },
+
+      debugShowCheckedModeBanner: false,
+    ),
+  );
+}
+
+class Search extends SearchDelegate {
+  final List<String> source = ['mg mg', 'aung aung', 'su su'];
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_back));
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    final suggestionList =
+        source.where((element) => element.contains(query)).toList();
+    return ListView.builder(
+        itemCount: suggestionList.length,
+        itemBuilder: (_, i) {
+          return ListTile(
+            title: Text("Result ${suggestionList[i]}"),
+          );
+        });
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final suggestionList =
+        source.where((element) => element.contains(query)).toList();
+    return ListView.builder(
+        itemCount: suggestionList.length,
+        itemBuilder: (_, i) {
+          return ListTile(
+            title: Text(suggestionList[i]),
+          );
+        });
+  }
 }
 
 /// Widget
