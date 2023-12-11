@@ -74,21 +74,59 @@ class _SingleChidScrollWidgetExampleState
     return Scaffold(
       body: SizedBox(
         width: MediaQuery.of(context).size.height,
-        child: ListView(
-          // itemExtent: 100,
-          physics: PageScrollPhysics(),
-          controller: controller,
-          reverse: true,
-          children: [
-            ListView(
-              children: data,
-            ),
+        child: custom(),
+      ),
+    );
+  }
 
-            ///...
-            ...data
-          ],
+  Widget custom() {
+    return ListView.custom(
+      childrenDelegate: SliverChildBuilderDelegate(
+        (context, index) => ListTile(
+          title: Text("Children $index"),
         ),
       ),
+    );
+  }
+
+  Widget separated() {
+    return ListView.separated(
+      itemBuilder: (_, i) {
+        return ListTile(
+          title: Text("Hello Item $i"),
+        );
+      },
+      separatorBuilder: (_, i) {
+        if (i % 10 == 0) return Text("Ads");
+        return Divider();
+      },
+      itemCount: 100,
+    );
+  }
+
+  Widget builder() {
+    return ListView.builder(
+      itemCount: 8,
+      itemBuilder: (_, i) {
+        return Text(i.toString());
+      },
+    );
+  }
+
+  Widget scroll() {
+    return ListView(
+      // itemExtent: 100,
+      physics: PageScrollPhysics(),
+      controller: controller,
+      reverse: true,
+      children: [
+        ListView(
+          children: data,
+        ),
+
+        ///...
+        ...data
+      ],
     );
   }
 }
